@@ -1,16 +1,12 @@
 package infin_bank.interview.figure.controller;
 
-import infin_bank.interview.figure.dto.request.FigureRequestDTO;
 import infin_bank.interview.figure.dto.responce.FigureResponseDTO;
 import infin_bank.interview.figure.service.CalculatedService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "api/figure/")
+@RequestMapping("api/figure")
 public class FigureController {
 
     @Autowired
@@ -18,7 +14,11 @@ public class FigureController {
 
     @GetMapping
     @ResponseBody
-    public FigureResponseDTO getFigureParameter(FigureRequestDTO figureRequestDTO){
-        return new FigureResponseDTO(calculatedService.calculate(figureRequestDTO));
+    public FigureResponseDTO getFigureParameter(
+            @RequestParam(name = "figureType") String figureType,
+            @RequestParam(name = "a") Double a,
+            @RequestParam(name = "b",required = false,defaultValue = "0") Double b,
+            @RequestParam(name = "c",required = false,defaultValue = "0") Double c){
+        return new FigureResponseDTO(calculatedService.calculate(figureType,a,b,c));
     }
 }

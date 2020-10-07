@@ -1,40 +1,33 @@
 package infin_bank.interview.figure.service;
 
-import infin_bank.interview.figure.dto.request.FigureRequestDTO;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class CalculatedServiceImpl implements CalculatedService {
-    private static Rectangle rectangle;
-    private static Triangle triangle;
-    private static Circle circle;
+    @Autowired
+    private Rectangle rectangle;
+    @Autowired
+    private Triangle triangle;
+    @Autowired
+    private Circle circle;
 
-    public Map<String, Double> calculate(FigureRequestDTO figureRequestDTO){
-        Figure figure = createFigure(figureRequestDTO.getFigureType());
+    public Map<String, Double> calculate(String figureType, Double a, Double b, Double c){
+        Figure figure = createFigure(figureType);
         Map<String,Double> resultMap = new HashMap<>();
 
-        double area = figure.area(
-                figureRequestDTO.getA(),
-                figureRequestDTO.getB(),
-                figureRequestDTO.getC());
-
-        resultMap.put("area",area);
-
-        double perimeter = figure.perimeter(
-                figureRequestDTO.getA(),
-                figureRequestDTO.getB(),
-                figureRequestDTO.getC());
-
+        double perimeter = figure.perimeter(a,b,c);
         resultMap.put("perimeter",perimeter);
+
+        double area = figure.area(a,b,c);
+        resultMap.put("area",area);
 
         return resultMap;
     }
-    private static Figure createFigure(String figureType){
+    private Figure createFigure(String figureType){
         if (figureType.equalsIgnoreCase("rectangle")){
             return rectangle ;
         }

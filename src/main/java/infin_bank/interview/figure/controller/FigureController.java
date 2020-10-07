@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/figure")
+@RequestMapping("/api/figure")
 public class FigureController {
 
     @Autowired
@@ -17,8 +17,8 @@ public class FigureController {
     public FigureResponseDTO getFigureParameter(
             @RequestParam(name = "figureType") String figureType,
             @RequestParam(name = "a") Double a,
-            @RequestParam(name = "b",required = false,defaultValue = "0") Double b,
-            @RequestParam(name = "c",required = false,defaultValue = "0") Double c){
+            @RequestParam(name = "b", required = false, defaultValue = "0") Double b,
+            @RequestParam(name = "c", required = false, defaultValue = "0") Double c){
         return new FigureResponseDTO(calculatedService.calculate(figureType,a,b,c));
     }
 }
